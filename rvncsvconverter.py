@@ -26,10 +26,10 @@ def format_date(date):
     
 def format_trans(trans_type, qt, curr, payout, threshold):
     rec_qt,rec_curr,sent_qt,sent_curr,tag = "\"\"","\"\"","\"\"","\"\"","\"\""
-    if trans_type == "Sent to":
+    if trans_type == "\"Sent to\"":
         sent_qt = "\"" + qt[1:] + "\""
         sent_curr = curr
-    elif trans_type == "Received with":
+    elif trans_type == "\"Received with\"":
         rec_qt = "\"" + qt + "\""
         rec_curr = curr
         if abs(float(qt)-payout) < threshold:

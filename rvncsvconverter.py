@@ -20,7 +20,7 @@ def format_csv(filename,payout,threshold):
         file.writelines(out_csv)
 
 def format_date(date):
-    dt = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S')
+    dt = datetime.strptime(date, '\"%Y-%m-%dT%H:%M:%S\"')
     out_date = datetime.strftime(dt, '\"%m/%d/%Y %H:%M:%S\"')
     return out_date
     

@@ -7,11 +7,10 @@ def format_csv(filename,payout,threshold):
     with open(filename) as file:
         for line in file.readlines()[1:]:
             out_list = []
-            _,date,trans_type,tag,addr,qt,curr,id= line.split(",")
-            curr = "\"" + curr + "\""
+            _,date,trans_type,tag,_,qt,curr,_= line.split(",")
             date = format_date(date)
             out_list.append(date)
-            trans = format_trans(trans_type, qt, curr,payout,threshold)
+            trans = format_trans(trans_type, qt.strip('-'), curr,payout,threshold)
             out_list.extend(trans)
             out_str = ",".join(out_list)
             out.append(out_str)
@@ -27,12 +26,12 @@ def format_date(date):
 def format_trans(trans_type, qt, curr, payout, threshold):
     rec_qt,rec_curr,sent_qt,sent_curr,tag = "\"\"","\"\"","\"\"","\"\"","\"\""
     if trans_type == "\"Sent to\"":
-        sent_qt = "\"" + qt[1:] + "\""
+        sent_qt = qt
         sent_curr = curr
     elif trans_type == "\"Received with\"":
-        rec_qt = "\"" + qt + "\""
+        rec_qt = qt
         rec_curr = curr
-        if abs(float(qt)-payout) < threshold:
+        if abs(float(qt.strip('"'))-payout) < threshold:
             tag = "\"mined\""
     return [rec_qt,rec_curr,sent_qt,sent_curr,"\"\"","\"\"",tag]
 
